@@ -1,0 +1,14 @@
+{
+  "name": "nasa_backend_project",
+  "version": "1.0.0",
+  "description": "learing fullstack node project",
+  "main": "bin",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vikash parida",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
