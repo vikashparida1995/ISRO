@@ -3,12 +3,16 @@ const app = express();
 
 const cors = require('cors')
 
+app.use(cors({
+    origin:'http://localhost:3000'
+}))
+app.use(express.json());
+
 const planetsRouters = require('./routes/planets/planets.router')
 
 app.use('/planets-api', planetsRouters)
 
-app.use(cors())
-app.use(express.json());
+
 
 
 
