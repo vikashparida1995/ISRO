@@ -14,25 +14,38 @@ function isHabitablePlanet(planet){
     &&  planet['koi_prad'] < 1.6 ;
 }
 
+function loadPlanetsData() {
+    return new Promise((resolve, reject) => {
 fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kapler_data.csv'))
 .pipe(parse(config))
 .on('data',(data)=>{
-   if(isHabitablePlanet(data))
-    HabitablePlanets.push(data)
+   if(isHabitablePlanet(data)){
+     HabitablePlanets.push(data)
+   }
+   
 })
 .on('error',(error)=>{
   console.log(error)
+    reject(error);
 })
 .on('end',()=>{
     if(HabitablePlanets){
+        resolve(HabitablePlanets);
         console.log(HabitablePlanets.map((planet)=>{
             return planet['kepler_name'] ;
         }))
     }
-    console.log(`${HabitablePlanets.length}  Habitable Planets found ! `)    
+    console.log(`${HabitablePlanets.length}  Habitable Planets found ! `)   
+     
 })
+    })
+
+}
 
 
 
 
-module.exports = HabitablePlanets;
+module.exports = {
+    HabitablePlanets,
+    loadPlanetsData
+};
