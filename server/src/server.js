@@ -11,6 +11,7 @@ const server = http.createServer(app)
 
 
 
+
 async function  loadData() {
     loadPlanetsData()
   .then(() => {
