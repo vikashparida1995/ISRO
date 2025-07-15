@@ -1,9 +1,9 @@
 const http = require('http')
 const port = process.env.PORT || 8000;
 
-const app = require('./app')
+const app = require('./src/app')
 
-const { loadPlanetsData } = require('./models/planets.models');
+const { loadPlanetsData } = require('./src/models/planets.models');
 // Load planets data before starting the server
 
 
