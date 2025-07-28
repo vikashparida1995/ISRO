@@ -11,15 +11,22 @@ const { loadPlanetsData } = require('./src/models/planets.models');
 
 const server = http.createServer(app)
 
+mongoose.connection.once('open', (err) => {
+  console.error('MongoDB connection Ready state:', mongoose.connection.readyState);  
+});
 
 
 
 async function  loadData() {
 
-  mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,  
-    useUnifiedTopology: true,
-  })
+  mongoose.connect(process.env.MONGO_URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
+  )
   .then(() => {   
     console.log('Connected to MongoDB');
   })
@@ -29,7 +36,7 @@ async function  loadData() {
     process.exit(1); // Exit the process if connection fails
 
   }); 
-    loadPlanetsData()
+  loadPlanetsData()
   .then(() => {
     console.log('Planets data loaded successfully');
   })
