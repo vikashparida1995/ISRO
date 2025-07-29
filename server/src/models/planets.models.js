@@ -1,3 +1,8 @@
+const mongoose = require('mongoose');
+const PlanetsSchema = require('../schemas/planets.schema.js');
+
+const PlanetsModel = mongoose.model('Planet', PlanetsSchema);
+
 const {parse} = require('csv-parse');
 const fs = require('fs');
 const path = require('path');
@@ -47,5 +52,6 @@ fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kapler_data.csv'))
 
 module.exports = {
     HabitablePlanets,
-    loadPlanetsData
+    loadPlanetsData,
+    PlanetsModel
 };
