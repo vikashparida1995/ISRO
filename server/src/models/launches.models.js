@@ -1,3 +1,8 @@
+const launchSchema = require('../schemas/launches.schema.js');
+const mongoose = require('mongoose');
+
+const LaunchModel = mongoose.model('Launch', launchSchema);
+
 const launches = new Map();
 
 let latestFlightNumber = 100;
@@ -60,5 +65,6 @@ module.exports = {
     getAllLaunches,
     addNewLaunch,
     existslaunchWithId,
-    abortLaunchById
+    abortLaunchById,
+    LaunchModel
 }
