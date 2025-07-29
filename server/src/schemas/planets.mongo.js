@@ -9,4 +9,4 @@ planetsSchema.index({ keplerName: 1 }, { unique: true }); // Ensure unique index
 // module.exports = mongoose.model('Planet', planetsSchema); // Export the model
 // module.exports = launchSchema; // Export the launch schema
 
-module.exports = planetsSchema; // Export the planets schema
+module.exports = mongoose.model('Planet', planetsSchema);

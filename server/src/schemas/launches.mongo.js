@@ -16,4 +16,4 @@ const launchSchema = new mongoose.Schema({
 launchSchema.index({ mission: 1, rocket: 1 }, { unique: true });    
 
 
-module.exports = launchSchema;
+module.exports = mongoose.model('Launch', launchSchema);

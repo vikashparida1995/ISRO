@@ -1,7 +1,5 @@
-const launchSchema = require('../schemas/launches.schema.js');
-const mongoose = require('mongoose');
-
-const LaunchModel = mongoose.model('Launch', launchSchema);
+'use strict';
+const LaunchModel = require('../schemas/launches.mongo.js');
 
 const launches = new Map();
 
