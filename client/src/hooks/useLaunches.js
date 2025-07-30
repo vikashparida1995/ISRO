@@ -33,7 +33,7 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
       rocket,
       target,
     });
-   console.log('response.....................', response);
+   
     // TODO: Set success based on response.
     const success = response.ok; // Assuming response.ok is true if the launch was submitted successfully.
     if (success) {

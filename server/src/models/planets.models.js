@@ -2,9 +2,6 @@ const planetModel = require('../schemas/planets.mongo.js');
 const {parse} = require('csv-parse');
 const fs = require('fs');
 const path = require('path');
-const { httpGetAllPlanets } = require('../routes/planets/planets.controllers.js');
-let HabitablePlanets = []
-
 let config = {
     comment:'#',
     columns: true,  
@@ -51,7 +48,6 @@ async function savePlanets(planets) {
 
 
 async function  getAllPlanets(){
-    // return HabitablePlanets;
     let data = await planetModel.find({},{_id: 0, __v: 0});
     if(!data || data.length === 0){
         throw new Error('No planets found');

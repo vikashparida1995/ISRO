@@ -22,8 +22,6 @@ async function httpAddNewLaunch(req, res){
 
     launch.launchDate = new Date(launch.launchDate);
     if (isNaN(launch.launchDate)) return res.status(400).json({ error: 'Invalid launch date'}); 
-    
-    console.log('Adding new launch:', launch);
     let response =  ScheduleNewLaunch(launch);
     response.ok = true
     return res.status(201).json(response);

@@ -10,8 +10,6 @@ planetsRouter.get('/planets',plaentsControllers.httpGetAllPlanets );
 
 
 
-
-
 module.exports = planetsRouter;
 
 

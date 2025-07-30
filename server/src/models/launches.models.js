@@ -2,7 +2,6 @@
 const LaunchModel = require('../schemas/launches.mongo.js');
 const planetModel = require('../schemas/planets.mongo.js');
 
-// const launches = new Map();
 
 let DEFAULT_FLIGHT_NUMBER = 100;
 
@@ -18,7 +17,6 @@ async function getlatestFlightNumber() {
 
 async function getAllLaunches() {
     let data = await LaunchModel.find({}, {_id: 0,__v :0}).sort({flightNumber: 1});
-    // console.log('data', data);
     if(!data || data.length === 0){ 
          return 'No launches found';
     }
@@ -28,8 +26,6 @@ async function getAllLaunches() {
 
 async function ScheduleNewLaunch(launch) {
     const newFlightNumber = await getlatestFlightNumber() + 1;
-    
-
     const newLaunch = Object.assign(launch, {
         success: true,
         upcoming: true,
@@ -65,7 +61,6 @@ async function ScheduleNewLaunch(launch) {
         { flightNumber: launchId },
         { upcoming: false, success: false }
     );  
-    console.log('aborted', aborted);
     return aborted; 
   }
 
