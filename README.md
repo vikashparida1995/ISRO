@@ -1,2 +1,2 @@
-# Nasa
+# ISRO
 fullstack project
