@@ -7,26 +7,18 @@ const app = require('./src/app')
 
 const { loadPlanetsData } = require('./src/models/planets.models');
 // Load planets data before starting the server
-
+const { mongoConnect } = require('./src/service/mongo');
 
 const server = http.createServer(app)
 
-mongoose.connection.once('open', (err) => {
-  console.error('MongoDB connection Ready state:', mongoose.connection.readyState);  
-});
+// mongoose.connection.once('open', (err) => {
+//   console.error('MongoDB connection Ready state:', mongoose.connection.readyState);  
+// });
 
 
 
 async function  loadData() {
-
-  mongoose.connect(process.env.MONGO_URI,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false
-    }
-  )
+   mongoConnect()
   .then(() => {   
     console.log('Connected to MongoDB');
   })
