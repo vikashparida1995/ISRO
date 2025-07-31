@@ -1,6 +1,8 @@
 'use strict';
+const axios = require('axios');
 const LaunchModel = require('../schemas/launches.mongo.js');
 const planetModel = require('../schemas/planets.mongo.js');
+const { response } = require('../app.js');
 
 
 let DEFAULT_FLIGHT_NUMBER = 100;
@@ -33,7 +35,64 @@ async function ScheduleNewLaunch(launch) {
         flightNumber: newFlightNumber,
     }); 
 
- return await saveLaunch(newLaunch);                      
+ return await saveLaunch(newLaunch);   
+
+}
+
+let spaceX_URL = "https://api.spacexdata.com/v4/launches/query"
+
+async function loadLaunchesData(){
+    let firstLaunch = await LaunchModel.find({
+        flightNumber:1,
+        rocket: "Falcon 9",
+        mission : "FalconSat"
+
+    })
+    if(firstLaunch) {
+        console.log("data is load already")
+        return 
+    }
+ let responseData = await axios.post(spaceX_URL,{
+  "options": {
+    // "limit":1500,
+    "pagination" : false,
+    "populate": [
+      {
+        "path": "payloads",
+        "select": {
+          "customers": 1
+        }
+      },
+      {
+        "path": "rocket",
+        "select": {
+          "name": 1
+        }
+      }
+    ]
+  }
+});
+ let launchData = responseData.data.docs;
+ for(const launchDoc of launchData){
+  const payload = launchDoc['payloads'];
+  const customers = payload.flatMap((payload)=>{
+    return payload['customers'];
+  })
+
+  const launch = { 
+    flightNumber : launchDoc['flight_number'],
+    customers,
+    launchDate : launchDoc['date_local'],
+    mission : launchDoc['name'],
+    rocket : launchDoc['rocket']['name'],
+    success : launchDoc['success'],
+    target :"Kepler-1652 b",
+    upcoming :launchDoc['upcoming'],
+   }
+
+  saveLaunch(launch)
+
+ }
 }
 
  async function saveLaunch(launch) {
@@ -74,5 +133,6 @@ module.exports = {
     ScheduleNewLaunch,
     existslaunchWithId,
     abortLaunchById,
-    LaunchModel
+    loadLaunchesData,
+    // LaunchModel
 }
