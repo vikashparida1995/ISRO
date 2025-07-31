@@ -1,9 +1,12 @@
-// const API_URL = 'http://localhost:8000'
+
+
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/v1';
+
 
  async function httpGetPlanets() {
   // TODO: Once API is ready.
   // const response = await fetch(`${API_URL}/planets-api/planets`);
-  const response = await fetch('http://localhost:8000/planets-api/planets');
+  const response = await fetch(`${API_URL}/planets-api/planets`);
   if(!response.ok) {
     return [];
   }
@@ -15,7 +18,7 @@
 async function httpGetLaunches() {
   // TODO: Once API is ready.
   // Load launches, sort by flight number, and return as JSON.
-  const response = await fetch('http://localhost:8000/launches-api/launches');
+  const response = await fetch(`${API_URL}/launches-api/launches`);
   let flightLaunches  = await response.json();
   if (!flightLaunches.length) {
     return [];
@@ -29,7 +32,7 @@ async function httpGetLaunches() {
 async function httpSubmitLaunch(launch) {
   console.log('launch', launch);
   try{
-   return await fetch('http://localhost:8000/launches-api/launches', {
+   return await fetch(`${API_URL}/launches-api/launches`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +51,7 @@ async function httpSubmitLaunch(launch) {
 
 async function httpAbortLaunch(id) {
   // TODO: Once API is ready.
-try{  return await fetch(`http://localhost:8000/launches-api/launches/${id}`, {
+try{  return await fetch(`${API_URL}/launches-api/launches/${id}`, {
     method: 'DELETE',
   })}catch (error) {
     console.error('Error aborting launch:', error);

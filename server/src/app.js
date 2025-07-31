@@ -16,14 +16,19 @@ app.use(morgan('combined'))
 app.use(express.json());
 app.use(express.static(path.join(__dirname ,'..', 'public')))
 
-const planetsRouters = require('./routes/planets/planets.router')
-const launchesRouters = require('./routes/launches/launches.router')
-const historyRouters = require('./routes/historys/history.router')  // require the history router
+// const planetsRouters = require('./routes/planets/planets.router')
+// const launchesRouters = require('./routes/launches/launches.router')
+// const historyRouters = require('./routes/historys/history.router')  // require the history router
 
-app.use('/planets-api', planetsRouters)
-app.use('/launches-api',launchesRouters)   /// require and use the launches router in single line
-app.use('/history-api', historyRouters)  // use the history router
-app.get('/', (req, res) => {
+// app.use('/v1/planets-api', planetsRouters)
+// app.use('/v1/launches-api',launchesRouters)   /// require and use the launches router in single line
+// app.use('/v1/history-api', historyRouters)  // use the history router
+
+
+  const api = require('./routes/api')
+  app.use('/v1' , api)
+  
+app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));           
 
 })

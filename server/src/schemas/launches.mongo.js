@@ -13,7 +13,10 @@ const launchSchema = new mongoose.Schema({
   timestamps: true      
 });
 
-launchSchema.index({ mission: 1, rocket: 1 }, { unique: true });    
+launchSchema.index({ mission: 1, rocket: 1 });    
 
 
 module.exports = mongoose.model('Launch', launchSchema);
+
+
+
