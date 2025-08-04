@@ -10,8 +10,8 @@ const cors = require('cors')
 // app.use(cors({
 //     origin:'http://localhost:3000'
 // }))
-app.use(cors())
-app.use(helmat())
+app.use(cors());
+app.use(helmat());
 app.use(morgan('dev'));
 // app.use(morgan('common'));
 // app.use(morgan('tiny'));

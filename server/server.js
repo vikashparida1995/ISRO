@@ -13,8 +13,8 @@ const { loadLaunchesData } = require('./src/models/launches.models');
 const { mongoConnect } = require('./src/service/mongo');
 
 const options = {
-  key: fs.readFileSync(path.join(__dirname, 'localhost.key')),
-  cert: fs.readFileSync(path.join(__dirname, 'localhost.crt')),
+  key: fs.readFileSync(path.join(__dirname,'src','TSL', 'localhost.key')),
+  cert: fs.readFileSync(path.join(__dirname,'src' ,'TSL', 'localhost.crt')),
 };
 
 const server = https.createServer(options,app)
@@ -22,7 +22,6 @@ const server = https.createServer(options,app)
 // mongoose.connection.once('open', (err) => {
 //   console.error('MongoDB connection Ready state:', mongoose.connection.readyState);  
 // });
-
 
 
 async function  loadData() {
