@@ -10,4 +10,6 @@ launchesRouter.post('/launches',launchesControllers.httpAddNewLaunch);
 
 launchesRouter.delete('/launches/:id',launchesControllers.httpAbortLaunch)
 
+launchesRouter.get('/launches/count' , launchesControllers.httplaunchCount)
+
 module.exports = launchesRouter;

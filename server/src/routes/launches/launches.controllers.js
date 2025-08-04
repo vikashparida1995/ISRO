@@ -1,10 +1,10 @@
+const {getAllLaunches,ScheduleNewLaunch,existslaunchWithId,abortLaunchById,getCountLaunch} = require('./../../models/launches.models');
 
-const {getAllLaunches,ScheduleNewLaunch,existslaunchWithId,abortLaunchById} = require('./../../models/launches.models');
-
-
+const {getPagination} = require('../../service/pagination.js')
 
 async function httpGetAllLaunches(req, res){
-    let launches = await getAllLaunches();
+    let {skip , limit , sort} = getPagination(req.query)
+    let launches = await getAllLaunches(skip,limit ,sort);
     if(launches === 'No launches found') {     
         return res.status(404).json({error: 'No launches found'});
     }
@@ -42,8 +42,36 @@ async function httpAbortLaunch(req, res){
 }
 
 
+async function httplaunchCount(req, res) {
+    try {
+        const launchCount = await getCountLaunch();
+        
+        if (!launchCount) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Unable to retrieve launch count'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            data: {
+                count: launchCount
+            }
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'Internal server error while fetching launch count',
+            error: error.message
+        });
+    }
+}
+
+
 module.exports = {
     httpGetAllLaunches ,
     httpAddNewLaunch  ,
-    httpAbortLaunch
+    httpAbortLaunch ,
+    httplaunchCount
 }

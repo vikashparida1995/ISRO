@@ -2,7 +2,7 @@
 const axios = require('axios');
 const LaunchModel = require('../schemas/launches.mongo.js');
 const planetModel = require('../schemas/planets.mongo.js');
-const { response } = require('../app.js');
+// const { response } = require('../app.js');
 
 
 let DEFAULT_FLIGHT_NUMBER = 100;
@@ -17,8 +17,11 @@ async function getlatestFlightNumber() {
     return LatesLaunch.flightNumber;
 }
 
-async function getAllLaunches() {
-    let data = await LaunchModel.find({}, {_id: 0,__v :0}).sort({flightNumber: 1});
+async function getAllLaunches(skip,limit,sort) {
+    let data = await LaunchModel.find({}, {_id: 0,__v :0})
+    .skip(skip)
+    .limit(limit)
+    .sort({flightNumber: sort});
     if(!data || data.length === 0){ 
          return 'No launches found';
     }
@@ -43,12 +46,9 @@ let spaceX_URL = "https://api.spacexdata.com/v4/launches/query"
 
 async function loadLaunchesData(){
     let firstLaunch = await LaunchModel.find({
-        flightNumber:1,
-        rocket: "Falcon 9",
-        mission : "FalconSat"
-
+        flightNumber:1
     })
-    if(firstLaunch) {
+    if(firstLaunch.length != 0 ) {
         console.log("data is load already")
         return 
     }
@@ -124,7 +124,22 @@ async function loadLaunchesData(){
   }
 
 
-       
+ async function getCountLaunch() {
+    try {
+        const count = await LaunchModel.countDocuments({});
+        return {
+            success: true,
+            count: count || 0
+        };
+    } catch (error) {
+        console.error('Error getting launch count:', error);
+        return {
+            success: false,
+            error: 'Failed to get launch count',
+            details: error.message
+        };
+    }
+ }
  
  
 
@@ -134,5 +149,5 @@ module.exports = {
     existslaunchWithId,
     abortLaunchById,
     loadLaunchesData,
-    // LaunchModel
+    getCountLaunch
 }
