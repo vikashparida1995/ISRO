@@ -45,3 +45,6 @@ Use a combination of SAST, DAST, and dependency scanning for comprehensive cover
 Regularly update your tools to ensure they detect the latest vulnerabilities.
 
 These tools and practices will help secure your Node.js project effectively!
+
+
+
