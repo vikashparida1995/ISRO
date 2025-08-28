@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install-server": "npm install --prefix server",
+   "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",
-    "install": "npm run install-server && npm run install-client",
-    "app": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "concurrently \"npm run install-server\" \"npm run install-client\"",
+    "server": "npm run watch --prefix server",
+    "client": "npm start --prefix client",
+    "watch": "concurrently \"npm run server\" \"npm run client\"",
+    "deploy": "concurrently \"npm run build --prefix client\" \" npm start --prefix server\"",
+    "deploy-cluster": "concurrently \"npm run build --prefix client\" \"npm run cluster --prefix server\"",
+    "test": "concurrently \" npm test --prefix server\" \" npm test --prefix client\""
   },
   "author": "vikash parida",
   "license": "ISC",
