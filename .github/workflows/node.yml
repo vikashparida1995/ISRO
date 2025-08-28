@@ -8,16 +8,22 @@ jobs:
   build: 
     env: 
       CI: true 
+      MONGO_URL: mongodb://localhost/isro
     strategy: 
       matrix:
         node-versions: [16.x , 20.x]
+        mongodb-versions: ['4.4']
     runs-on: ubuntu-latest
     steps:  
       - uses: actions/checkout@v3
       - name: Use Nodejs version ${{matrix.node-versions}}
         uses: actions/setup-node@v3
         with:
-          node-version:  ${{matrix.node-versions}}
+          node-versions:  ${{matrix.node-versions}}
+      - name: Start MongoDB
+      - uses: supercharge/mongodb-github-action@1.12.0
+        with:
+          mongodb-versions:  ${{matrix.node-versions}}
       - run: npm install
       - run: npm run build --prefix client
       # - run: npm run test
