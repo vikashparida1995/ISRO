@@ -1,7 +1,7 @@
 
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:8000/v1';
-
+// const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:8000/v1';
+const API_URL =  'v1'
 
  async function httpGetPlanets() {
   // TODO: Once API is ready.
