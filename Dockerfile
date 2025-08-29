@@ -16,7 +16,7 @@ COPY client/ client/
 RUN npm run build  --prefix client
 
 COPY server/ server/
-Ru
+
 
 USER node
 
