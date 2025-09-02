@@ -8,7 +8,8 @@ COPY client/package*.json client/
 COPY server/package*.json server/
 
 # Install dependencies for root, client, and server
-RUN npm install
+# RUN npm install
+
 RUN npm run install-client --prefix client --only=production
 RUN npm run install-server --prefix server --only=production
 
